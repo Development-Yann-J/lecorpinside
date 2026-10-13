@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autorisation — Le Corp Inside</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 680px; margin: 40px auto; padding: 0 16px; line-height: 1.6; color: #222; background: #fff; }
+  h1 { color: #D7263D; }
+  code { display: block; word-break: break-all; background: #f4f4f4; padding: 12px; border-radius: 8px; }
+  button { margin-top: 12px; padding: 10px 18px; border: 0; border-radius: 8px; background: #D7263D; color: #fff; font-size: 16px; cursor: pointer; }
+</style>
+</head>
+<body>
+<h1>Autorisation TikTok</h1>
+<div id="out">Aucun code reçu.</div>
+<script>
+  const p = new URLSearchParams(location.search);
+  const out = document.getElementById("out");
+  if (p.get("code")) {
+    out.innerHTML = "<p>Autorisation réussie. Copie ce texte et colle-le dans le terminal :</p><code id='c'></code><button id='b'>Copier</button>";
+    document.getElementById("c").textContent = location.href;
+    document.getElementById("b").onclick = () => navigator.clipboard.writeText(location.href).then(() => document.getElementById("b").textContent = "Copié ✔");
+  } else if (p.get("error")) {
+    out.textContent = "Erreur : " + p.get("error") + " — " + (p.get("error_description") || "");
+  }
+</script>
+</body>
+</html>
